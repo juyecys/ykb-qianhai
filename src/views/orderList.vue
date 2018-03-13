@@ -69,7 +69,7 @@
             switch(item.status){
               case 'WAIT_CONFIRM':
                 item.statusType = 0
-                item.statusText = '待确认'
+                item.statusText = '待支付'
                 item.statusClass= 'waitPay'
                 this.hadAllOrder = true
                 this.hadNoPaiedOrder = true
@@ -168,7 +168,9 @@
         }
         obj.sign = this.md5(obj,'29F802572E8D4D9E90E9EBBEA51CEB58')
         obj.actionType = 'orderDetail'
-        this.jsForm(event,obj,'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/orderDetail/')
+        let actionUrl = window.location.hostname === 'm.chengyisheng.com.cn'?'http://wxsale.qhins.com/wcthl/third/entry/ykb/tubebaby/orderDetail/':'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/orderDetail/'
+
+        this.jsForm(event,obj,actionUrl)
         console.log(obj)
       },
       jsForm(event,obj,url){

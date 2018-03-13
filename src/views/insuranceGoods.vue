@@ -379,6 +379,9 @@
           "userId":obj.userId
         }
         console.log(myObj)
+        let actionUrl = window.location.hostname === 'm.chengyisheng.com.cn'?'http://wxsale.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/':'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/'
+        console.log(window.location.hostname,window.location.hostname === 'm.chengyisheng.com.cn',actionUrl)
+
         api.submitInsuranceInfo(myObj)
           .then(res=>{
           if(this.hadNoAuth || res.code === '4001'){
@@ -386,11 +389,11 @@
             this.hadNoAuth = true
             return
           }
-          this.jsForm(event,obj,'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/')
+          this.jsForm(event,obj,actionUrl)
         })
           .catch(error=>{
           console.log(error)
-          this.jsForm(event,obj,'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/')
+          this.jsForm(event,obj,actionUrl)
         })
       },
       valueIsNoEmpty(value,msg){
