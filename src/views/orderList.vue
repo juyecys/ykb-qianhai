@@ -165,11 +165,13 @@
           userId:userId,
           orderId:id,
           reqTime:dateFormat(new Date(),'yyyymmdd','HHmmdd','')
-        }
-        obj.sign = this.md5(obj,'29F802572E8D4D9E90E9EBBEA51CEB58')
-        obj.actionType = 'orderDetail'
-        let actionUrl = window.location.hostname === 'm.chengyisheng.com.cn'?'http://wxsale.qhins.com/wcthl/third/entry/ykb/tubebaby/orderDetail/':'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/orderDetail/'
+        },
+          key = window.location.hostname === 'staging.chengyisheng.com.cn'?'29F802572E8D4D9E90E9EBBEA51CEB58':'63F0C27BE5D54DBE8DD40F88035F8C64'
 
+        obj.sign = this.md5(obj,key)
+        obj.actionType = 'orderDetail'
+        let actionUrl = ((window.location.hostname === 'staging.chengyisheng.com.cn')?'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/orderDetail':'https://wxsale.qhins.com/wcthl/third/entry/ykb/tubebaby/orderDetail')
+        console.log(window.location.hostname,window.location.hostname === 'staging.chengyisheng.com.cn',actionUrl)
         this.jsForm(event,obj,actionUrl)
         console.log(obj)
       },

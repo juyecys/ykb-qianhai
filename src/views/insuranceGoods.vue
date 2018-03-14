@@ -143,11 +143,16 @@
     </div>
     <alert v-model="showAlert" @on-show="log" @on-hide="log">{{alertText}}</alert>
     <div id="qrCode" v-show="hadNoAuth">
-      <img src="../../static/images/qrcode.jpg" alt="">
+      <img src="../../static/images/qrcode.png" alt="">
       <p>请关注"易康保"公众号后在菜单栏进入页面投保</p>
-      <img src="../../static/images/icon-close-white.png" alt="" class="close" @click="closeQrCode">
+      <img src="../../static/images/icon-close-white.png" alt="" class="close" @click="closeQrCode(0)">
     </div>
-    <div class="mask" v-show="hadNoAuth"></div>
+    <div id="qrCode" v-show="contactWithKefu">
+      <img src="../../static/images/kefuWX.jpg" alt="">
+      <p>扫描二维码，与客服沟通</p>
+      <img src="../../static/images/icon-close-white.png" alt="" class="close" @click="closeQrCode(1)">
+    </div>
+    <div class="mask" v-show="hadNoAuth || contactWithKefu"></div>
   </div>
 </template>
 <script>
@@ -163,6 +168,7 @@
     },
     data(){
       return {
+        contactWithKefu:false,
         hadNoAuth:false,
         action:0,
         dateOfOrderTips:'',
@@ -287,8 +293,12 @@
         console.log(result)
         return result
       },
-      closeQrCode(){
-        this.hadNoAuth = false
+      closeQrCode(code){
+        if(code === 0){
+          this.hadNoAuth = false
+        }else{
+          this.contactWithKefu = false
+        }
       },
       keepTop(ele,h1,h2,h3,navHeight){
         console.log(ele)
@@ -365,7 +375,7 @@
               "trialPremium": this.insuranceOfCountForPay,
               "reqTime":dateFormat(new Date(),'yyyymmdd','HHmmdd','')
             },
-          key = window.location.hostname === 'm.chengyisheng.com.cn'?'63F0C27BE5D54DBE8DD40F88035F8C64':'29F802572E8D4D9E90E9EBBEA51CEB58'
+          key = window.location.hostname === 'staging.chengyisheng.com.cn'?'29F802572E8D4D9E90E9EBBEA51CEB58':'63F0C27BE5D54DBE8DD40F88035F8C64'
 
         obj.sign = this.md5(obj,key)
         obj.actionType = "entry"
@@ -379,8 +389,8 @@
           "userId":obj.userId
         }
         console.log(myObj)
-        let actionUrl = window.location.hostname === 'm.chengyisheng.com.cn'?'http://wxsale.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/':'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/'
-        console.log(window.location.hostname,window.location.hostname === 'm.chengyisheng.com.cn',actionUrl)
+        let actionUrl = window.location.hostname === 'staging.chengyisheng.com.cn'?'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/':'https://wxsale.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/'
+        console.log(window.location.hostname,window.location.hostname === 'staging.chengyisheng.com.cn',actionUrl)
 
         api.submitInsuranceInfo(myObj)
           .then(res=>{
@@ -530,7 +540,8 @@
         this.action = con
       },
       contactKefu(){
-        window.location.href='tel:400-061-8989'
+        this.contactWithKefu = true
+        //window.location.href='tel:400-061-8989'
       }
     }
 
@@ -785,7 +796,7 @@
                 color:#999;
               }
               .goodsCon{
-                max-width: 450/@size;
+                max-width: 480/@size;
                 color:#333;
                 em{
                   font-style: normal;
