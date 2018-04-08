@@ -190,6 +190,35 @@
         tableItemHeight:[]
       }
     },
+    created(){
+      if(window.location.href.indexOf('fromSource')>-1){
+        let sourceArr = /fromSource=(.*)/.exec(window.location.href),
+          source=''
+        if(sourceArr.length >=2){
+          source = sourceArr[1].toUpperCase()
+          let myUrl = '',link=''
+          if(window.location.hostname === 'staging.chengyisheng.com.cn'){
+            myUrl = 'http://staging.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=http://staging.chengyisheng.com.cn/ykb_qianhai/index.html#/?source='+source
+
+            link  = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+
+          }else{
+            myUrl = 'https://m.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=https://m.chengyisheng.com.cn/ykb_qianhai/index.html#/?source='+source
+
+            link  =  'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+
+          }
+          console.log(link)
+          window.location.href = link
+        }
+      }
+      if(window.location.href.indexOf('from=singlemessage')>-1 || window.location.href.indexOf('myShare=true')>-1 ){
+        let link = window.location.hostname === 'staging.chengyisheng.com.cn'?
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri=http%3A%2F%2Fstaging.chengyisheng.com.cn%2Fykb%2Fwp%2Fpublic%2Flogin%2F%3Fykb_url%3Dhttp%3A%2F%2Fstaging.chengyisheng.com.cn%2Fykb_qianhai%2Findex.html%23%2F&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          :'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri=https%3A%2F%2Fm.chengyisheng.com.cn%2Fykb%2Fwp%2Fpublic%2Flogin%2F%3Fykb_url%3Dhttps%3A%2F%2Fm.chengyisheng.com.cn%2Fykb_qianhai%2Findex.html%23%2F&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+        window.location.href = link
+      }
+    },
     mounted(){
       console.log(dateFormat(new Date(),'yyyymmdd','HHmmdd',''),'-----------',window.location.hostname)
       let self = this
@@ -253,6 +282,14 @@
           }
         },100)
       },300)
+      let shareObj = {
+        title:'试管婴儿保险投保',
+        desc:'易康保-试管婴儿保险投保请进入',
+        imgUrl:/^(http|https)+(:\/\/+[a-zA-Z0-9.]+)/g.exec(window.location.href)[0]+'/ykb_qianhai/static/images/insuranceGoods.png',
+        link:window.location.href + '?myShare=true',
+      }
+      console.log(shareObj)
+      this.wxShare(shareObj)
     },
     methods:{
       jsForm(event,obj,url){
@@ -407,7 +444,7 @@
         })
       },
       valueIsNoEmpty(value,msg){
-        if((typeof value==='number' && value !==0) || (typeof value==='string' && value !=='')){
+        if(((value === +value) && value !==0) || ((value === value + '') && value !=='')){
           return true
         }else{
           this.showAlert = true

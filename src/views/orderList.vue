@@ -55,6 +55,14 @@
         hadValidOrder:false
       }
     },
+    created(){
+      if(window.location.href.indexOf('from=singlemessage')>-1 || window.location.href.indexOf('myShare=true')>-1){
+        let link = window.location.hostname === 'staging.chengyisheng.com.cn'?
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri=http%3a%2f%2fstaging.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%3a%2f%2fstaging.chengyisheng.com.cn%2fykb_qianhai%2findex.html%23%2forderList&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          :'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri=http%3a%2f%2fm.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%3a%2f%2fm.chengyisheng.com.cn%2fykb_qianhai%2findex.html%23%2forderList&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+        window.location.href = link
+      }
+    },
     mounted(){
       /*
        * statusType表示
@@ -62,6 +70,14 @@
        * 1----有效订单
        * 2----全部订单
        * */
+      let shareObj = {
+        title:'易康保',
+        desc:'易康保-试管婴儿订单列表',
+        imgUrl:/^(http|https)+(:\/\/+[a-zA-Z0-9.]+)/g.exec(window.location.href)[0]+'/ykb_qianhai/static/images/logo.jpg',
+        link:window.location.href + '?myShare=true',
+      }
+      console.log(shareObj)
+      this.wxShare(shareObj)
       api.getMyOrderList().then(res=>{
           console.log(res)
           let data = res.result,a=0//a用来计数有那种订单，有优先级，actionType等于那个数字
