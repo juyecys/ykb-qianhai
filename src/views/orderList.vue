@@ -80,8 +80,9 @@
       this.wxShare(shareObj)
       api.getMyOrderList().then(res=>{
           console.log(res)
-          let data = res.result,a=0//a用来计数有那种订单，有优先级，actionType等于那个数字
-          data.map(item=>{
+          let data = res.hasOwnProperty('result')?res.result:[],
+            a=0//a用来计数有那种订单，有优先级，actionType等于那个数字
+          data.length>0&&data.map(item=>{
             switch(item.status){
               case 'WAIT_CONFIRM':
                 item.statusType = 0

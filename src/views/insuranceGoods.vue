@@ -187,7 +187,8 @@
         canBuyInsurance:true,
         userId:'',
         navHeight:0,
-        tableItemHeight:[]
+        tableItemHeight:[],
+        sources:'YI_KANG_BAO'
       }
     },
     created(){
@@ -198,26 +199,43 @@
           source = sourceArr[1].toUpperCase()
           let myUrl = '',link=''
           if(window.location.hostname === 'staging.chengyisheng.com.cn'){
-            myUrl = 'http://staging.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=http://staging.chengyisheng.com.cn/ykb_qianhai/index.html#/?source='+source
+            myUrl = 'http://staging.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=http://staging.chengyisheng.com.cn/ykb_qianhai/index.html&source='+source
 
             link  = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
 
           }else{
-            myUrl = 'https://m.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=https://m.chengyisheng.com.cn/ykb_qianhai/index.html#/?source='+source
+            myUrl = 'https://m.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=https://m.chengyisheng.com.cn/ykb_qianhai/index.html&source='+source
 
             link  =  'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
-
           }
           console.log(link)
           window.location.href = link
         }
+        return
       }
       if(window.location.href.indexOf('from=singlemessage')>-1 || window.location.href.indexOf('myShare=true')>-1 ){
-        let link = window.location.hostname === 'staging.chengyisheng.com.cn'?
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri=http%3A%2F%2Fstaging.chengyisheng.com.cn%2Fykb%2Fwp%2Fpublic%2Flogin%2F%3Fykb_url%3Dhttp%3A%2F%2Fstaging.chengyisheng.com.cn%2Fykb_qianhai%2Findex.html%23%2F&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
-          :'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri=https%3A%2F%2Fm.chengyisheng.com.cn%2Fykb%2Fwp%2Fpublic%2Flogin%2F%3Fykb_url%3Dhttps%3A%2F%2Fm.chengyisheng.com.cn%2Fykb_qianhai%2Findex.html%23%2F&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+        let myUrl = '',link=''
+        if(window.location.href.indexOf('source=')>-1){
+          let getSource = /(source=(.*))/.exec(window.location.href)
+          console.log(getSource)
+          if(getSource.length >= 3){
+            this.sources = getSource[2].split('&')[0]
+          }
+          console.log(this.sources)
+        }
+        if(window.location.hostname === 'staging.chengyisheng.com.cn'){
+          myUrl = 'http://staging.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=http://staging.chengyisheng.com.cn/ykb_qianhai/index.html&source='+this.sources
+
+          link  = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+
+        }else{
+          myUrl = 'https://m.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=https://m.chengyisheng.com.cn/ykb_qianhai/index.html&source='+this.sources
+
+          link  =  'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+        }
         window.location.href = link
       }
+
     },
     mounted(){
       console.log(dateFormat(new Date(),'yyyymmdd','HHmmdd',''),'-----------',window.location.hostname)
@@ -239,6 +257,7 @@
         self.show = true
         console.log(self.insuranceOfDateOfBirth)
       }
+
       if(self.userId === ''){
         api.getuserInfo().then(res=>{
           console.log(res)
@@ -247,6 +266,7 @@
           }
         })
       }
+
       let D = new Date(),H = D.getHours(),M=D.getMinutes(),
         tomorrow = new Date(D.getTime()+1000*60*60*24),
         afterDay = new Date(D.getTime()+1000*60*60*24*2);
@@ -279,17 +299,29 @@
             self.keepTop(ele,h1,h2,h3,ele.offsetHeight)
             self.navHeight = ele.offsetHeight
             clearInterval(timer)
+
+            if(window.location.href.indexOf('source=')>-1){
+              let getSource = /(source=(.*))/.exec(window.location.href)
+              console.log(getSource)
+              if(getSource.length >= 3){
+                self.sources = getSource[2].split('&')[0]
+              }
+              console.log(self.sources)
+            }
+            let hostName = /^(http|https)+(:\/\/+[a-zA-Z0-9.]+)/g.exec(window.location.href)[0]
+            let shareObj = {
+              title:'试管婴儿保险投保',
+              desc:'易康保-试管婴儿保险投保请进入',
+              imgUrl:hostName+'/ykb_qianhai/static/images/insuranceGoods.png',
+              link:hostName +'/ykb_qianhai/index.html#/?myShare=true&source='+self.sources,
+            }
+            console.log(shareObj,'-------------------',self.sources)
+            this.wxShare(shareObj)
+            console.log(window.location.href)
           }
         },100)
       },300)
-      let shareObj = {
-        title:'试管婴儿保险投保',
-        desc:'易康保-试管婴儿保险投保请进入',
-        imgUrl:/^(http|https)+(:\/\/+[a-zA-Z0-9.]+)/g.exec(window.location.href)[0]+'/ykb_qianhai/static/images/insuranceGoods.png',
-        link:window.location.href + '?myShare=true',
-      }
-      console.log(shareObj)
-      this.wxShare(shareObj)
+
     },
     methods:{
       jsForm(event,obj,url){
@@ -429,7 +461,7 @@
         let actionUrl = window.location.hostname === 'staging.chengyisheng.com.cn'?'http://wxsaleuat.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/':'https://wxsale.qhins.com/wcthl/third/entry/ykb/tubebaby/entry/'
         console.log(window.location.hostname,window.location.hostname === 'staging.chengyisheng.com.cn',actionUrl)
 
-        api.submitInsuranceInfo(myObj)
+        api.submitInsuranceInfo(myObj,this.sources)
           .then(res=>{
           if(this.hadNoAuth || res.code === '4001'){
             this.show = false
@@ -538,6 +570,7 @@
         if(this.userId !== ''){
           window.sessionStorage.setItem('userId',this.userId)
         }
+        window.sessionStorage.setItem('sources',this.sources)
         window.sessionStorage.setItem('insuranceOfCount',this.insuranceOfCount)
         window.sessionStorage.setItem('insuranceOfCountForPay',this.insuranceOfCountForPay)
         window.sessionStorage.setItem('insuranceOfDateOfBirth',this.insuranceOfDateOfBirth)

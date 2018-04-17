@@ -15,8 +15,10 @@ const getHospitalDataList = async ()=>{
      })
 }
 
-const submitInsuranceInfo = async data=>{
-  return await axios.post('/ykb/wp/private/insure/',data)
+const submitInsuranceInfo = async (data,source)=>{
+  let odata = Object.assign({},data)
+  odata.source = source
+  return await axios.post('/ykb/wp/private/insure/',odata)
     .then(res=>{
       return res.data
     })

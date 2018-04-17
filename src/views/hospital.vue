@@ -78,9 +78,7 @@
         window.sessionStorage.setItem('insuranceOfHospitalCode',id)
         //window.sessionStorage.removeItem('cityId')
         //window.sessionStorage.removeItem('cityName')
-        this.$router.push({
-          name:'insuranceGoods'
-        })
+        window.location.href=/^(http|https)+(:\/\/+[a-zA-Z0-9.]+)/g.exec(window.location.href)[0]+'/ykb_qianhai/index.html#/?source='+window.sessionStorage.getItem('sources')
       },
       toChooseProvince(){
         if(this.provinceName !== '请选择'){
