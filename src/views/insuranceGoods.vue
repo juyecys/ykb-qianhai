@@ -201,12 +201,12 @@
           if(window.location.hostname === 'staging.chengyisheng.com.cn'){
             myUrl = 'http://staging.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=http://staging.chengyisheng.com.cn/ykb_qianhai/index.html&source='+source
 
-            link  = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+            link  = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
 
           }else{
             myUrl = 'https://m.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=https://m.chengyisheng.com.cn/ykb_qianhai/index.html&source='+source
 
-            link  =  'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+            link  =  'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
           }
           console.log(link)
           window.location.href = link
@@ -226,12 +226,12 @@
         if(window.location.hostname === 'staging.chengyisheng.com.cn'){
           myUrl = 'http://staging.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=http://staging.chengyisheng.com.cn/ykb_qianhai/index.html&source='+this.sources
 
-          link  = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          link  = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
 
         }else{
           myUrl = 'https://m.chengyisheng.com.cn/ykb/wp/public/login/?ykb_url=https://m.chengyisheng.com.cn/ykb_qianhai/index.html&source='+this.sources
 
-          link  =  'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          link  =  'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri='+encodeURIComponent (myUrl)+'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
         }
         window.location.href = link
       }
@@ -313,7 +313,7 @@
               title:'试管婴儿保险投保',
               desc:'易康保-试管婴儿保险投保请进入',
               imgUrl:hostName+'/ykb_qianhai/static/images/insuranceGoods.png',
-              link:hostName +'/ykb_qianhai/index.html#/?myShare=true&source='+self.sources,
+              link:hostName +'/ykb_qianhai/index.html#/?myShare=true&fromSource='+self.sources,
             }
             console.log(shareObj,'-------------------',self.sources)
             this.wxShare(shareObj)
