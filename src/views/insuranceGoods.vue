@@ -141,6 +141,9 @@
         </div>
       </popup>
     </div>
+    <div class="toMyOrder" @click="toMyOrder">
+      <img src="static/images/myOrder.png" alt="">
+    </div>
     <alert v-model="showAlert" @on-show="log" @on-hide="log">{{alertText}}</alert>
     <div id="qrCode" v-show="hadNoAuth">
       <img src="../../static/images/qrcode.png" alt="">
@@ -324,6 +327,11 @@
 
     },
     methods:{
+      toMyOrder(){
+        this.$router.push({
+          name:'orderList'
+        })
+      },
       jsForm(event,obj,url){
         let temp = document.createElement("form");
         temp.id = 'authForm';
@@ -619,6 +627,18 @@
 </script>
 <style lang="less" scoped>
   @import '../assets/font.less';
+  .toMyOrder{
+    width:120/@size;
+    height:120/@size;
+    border-radius:100%;
+    position: fixed;
+    right:24/@size;
+    bottom:180/@size;
+    img{
+      width:120/@size;
+    }
+
+  }
   #qrCode{
     position: fixed;
     top:20%;
