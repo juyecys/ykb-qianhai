@@ -5,7 +5,7 @@ import OrderList from '@/views/orderList'
 import InsuranceGoods from '@/views/insuranceGoods'
 import Hospital from '@/views/hospital'
 import SurgicalInsurance from '@/views/surgicalInsurance'
-
+import buyInsurance from '@/views/buyInsurance'
 Vue.use(Router)
 
 export default new Router({
@@ -35,5 +35,10 @@ export default new Router({
       name: 'surgicalInsurance',
       component: SurgicalInsurance
     },
+    {
+      path:'/buyInsurance',
+      name:'buyInsurance',
+      component:buyInsurance
+    }
   ]
 })
