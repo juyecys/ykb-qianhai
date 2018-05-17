@@ -6,6 +6,10 @@ import InsuranceGoods from '@/views/insuranceGoods'
 import Hospital from '@/views/hospital'
 import SurgicalInsurance from '@/views/surgicalInsurance'
 import buyInsurance from '@/views/buyInsurance'
+import consultQrcode from '@/views/consultQrcode'
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -36,9 +40,14 @@ export default new Router({
       component: SurgicalInsurance
     },
     {
-      path:'/buyInsurance',
+      path:'/buyInsurance/:code',
       name:'buyInsurance',
       component:buyInsurance
+    },
+    {
+      path:'/consultQrcode',
+      name:'consultQrcode',
+      component:consultQrcode
     }
   ]
 })

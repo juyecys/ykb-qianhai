@@ -45,15 +45,35 @@ const getuserInfo = async ()=>{
       console.log(error)
     })
 }
+//获取buyInsurance页面的imgs列表
+const getInsuranceImg = async()=>{
+  return await  axios.get('/ykb/wp/public/activity/query?name=bdChannel')
+    .then(res=>{
+        return res.data
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
 
-
-
-
+//提交用户基本信息表单
+const submitUserInfo = async(params)=>{
+  return await  axios.post('/ykb/wp/public/bduser/',params)
+    .then(res=>{
+      return res.data
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
 const api = {
   getHospitalDataList,
   submitInsuranceInfo,
   getMyOrderList,
-  getuserInfo
+  getuserInfo,
+  getInsuranceImg,
+  submitUserInfo
+
 }
 
 export default api;
