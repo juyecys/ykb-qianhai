@@ -57,25 +57,27 @@
           v-model="user.name"
           placeholder="请输入您的姓名"
         ></x-input>
-        <Datetime
-          title="出生年月"
-          format="YYYY-MM"
-          v-model="user.birthday"
-          :start-date="startDate"
-          :end-date="endDate"
-          label-width="30"
-        ></Datetime>
+          <Datetime
+            title="出生年月"
+            format="YYYY-MM"
+            v-model="user.birthday"
+            :start-date="startDate"
+            :placeholder="'请输入出生年月'"
+            :end-date="endDate"
+            label-width="30"
+          >
+          </Datetime>
         <x-input
           title="性&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp别"
           text-align="right"
           v-model="user.gender"
           :readonly="true"
           @on-focus="showSexOptions"
-          placeholder="请输入您的性别"
+          placeholder="请选择您的性别"
         >
-          <slot name="right-full-height">
-            <x-icon type="ios-arrow-forward" size="30"></x-icon>
-          </slot>
+          <i slot="right-full-height">
+            <x-icon type="ios-arrow-forward" size="20"></x-icon>
+          </i>
         </x-input>
         <x-input
           ref="input"
@@ -316,7 +318,10 @@
 <style lang="less" >
   @import '../assets/font.less';
   #buyInsurance {
-
+    .vux-x-input-right-full{
+      align-items: center;
+      height: 100% !important;
+    }
     .banner{
       .canClick{
         cursor: pointer;
