@@ -5,8 +5,11 @@ import App from './App'
 import router from './router'
 import wx from 'weixin-js-sdk';
 import axios from 'axios'
-import  { AlertPlugin } from 'vux'
+import  { AlertPlugin, LoadingPlugin } from 'vux'
 Vue.use(AlertPlugin)
+Vue.use(LoadingPlugin)
+
+
 Vue.config.productionTip = false
 
 Vue.prototype.wxShare = (obj)=>{

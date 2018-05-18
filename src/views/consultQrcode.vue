@@ -5,7 +5,7 @@
         <img src="../../static/images/submit_to@2x.png" alt="">
       </div>
       <div class="title">
-        <h5>提交成功</h5>
+        <h5>提交成功！</h5>
         <p>您的信息已提交，医生助理将会在一个工作日内联系您，请耐心等候!</p>
       </div>
       <div class="img-wrapper">

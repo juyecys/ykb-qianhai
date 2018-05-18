@@ -47,7 +47,15 @@ const getuserInfo = async ()=>{
 }
 //获取buyInsurance页面的imgs列表
 const getInsuranceImg = async()=>{
-  return await  axios.get('/ykb/wp/public/activity/query?name=bdChannel')
+  let url = '';
+  let isWeixin = /micromessenger/.test(navigator.userAgent.toLowerCase())
+  if (isWeixin) {
+    url = '/ykb/wp/private/activity/query?name=bdChannel';
+  } else {
+    url = '/ykb/wp/public/activity/query?name=bdChannel';
+  }
+
+  return await  axios.get(url)
     .then(res=>{
         return res.data
     })
@@ -58,7 +66,15 @@ const getInsuranceImg = async()=>{
 
 //提交用户基本信息表单
 const submitUserInfo = async(params)=>{
-  return await  axios.post('/ykb/wp/public/bduser/',params)
+  let url = '';
+  let isWeixin = /micromessenger/.test(navigator.userAgent.toLowerCase())
+  if (isWeixin) {
+    url = '/ykb/wp/private/bduser/';
+  } else {
+    url = '/ykb/wp/public/bduser/';
+  }
+
+  return await  axios.post(url ,params)
     .then(res=>{
       return res.data
     })

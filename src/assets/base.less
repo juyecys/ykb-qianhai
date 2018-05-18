@@ -26,3 +26,19 @@ i{
   //一般用做图片容器，如果需要斜体，可以具体设置
   font-style:normal;
 }
+
+/* 去除iPhone中默认的input样式 */
+input[type="submit"],input[type="reset"],input[type="button"],input{
+  -webkit-appearance:none;
+  resize: none;
+  border-radius: 0;
+  color: inherit;
+  text-shadow: none;
+  outline:none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+body{
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+}
