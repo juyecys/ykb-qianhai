@@ -58,8 +58,8 @@
     created(){
       if(window.location.href.indexOf('from=singlemessage')>-1 || window.location.href.indexOf('myShare=true')>-1){
         let link = window.location.hostname === 'staging.chengyisheng.com.cn'?
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri=http%3a%2f%2fstaging.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%3a%2f%2fstaging.chengyisheng.com.cn%2fykb_qianhai%2findex.html%23%2forderList&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
-          :'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri=http%3a%2f%2fm.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%3a%2f%2fm.chengyisheng.com.cn%2fykb_qianhai%2findex.html%23%2forderList&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri=http%3a%2f%2fstaging.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%3a%2f%2fstaging.chengyisheng.com.cn%2fykb_qianhai%2findex.html%23%2forderList&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+          :'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri=http%3a%2f%2fm.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%3a%2f%2fm.chengyisheng.com.cn%2fykb_qianhai%2findex.html%23%2forderList&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
         window.location.href = link
       }
     },

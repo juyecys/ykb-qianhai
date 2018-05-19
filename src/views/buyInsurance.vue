@@ -234,10 +234,15 @@
           this.goAuth();
         }
       })
+
+      //let url = encodeURIComponent(this.getAuthUrl());
+
+      //alert(url);
+
       this.wxShare({
         title: '添加医生助理可获得备孕大礼包！', // 分享标题
         desc: '购买试管婴儿保险“保怀孕”，不成功我赔钱。', // 分享描述
-        link: encodeURI(this.getAuthUrl()), //encodeURI(location.href), // 分享链接
+        link: encodeURI(location.href), // 分享链接
         imgUrl: 'http://ykb-static-staging.oss-cn-shenzhen.aliyuncs.com/share_logo.png', // 分享图标
       })
     },
@@ -280,9 +285,9 @@
       getAuthUrl() {
         let code = this.$route.params.code;
         return window.location.hostname === 'staging.chengyisheng.com.cn'?
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri=http%3a%2f%2fstaging.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%3a%2f%2fstaging.chengyisheng.com.cn%2fykb_qianhai%2findex.htmlssssbuyInsurancessss' + code + '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51e37306f30d52a9&redirect_uri=http%3a%2f%2fstaging.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%253a%252f%252fstaging.chengyisheng.com.cn%252fykb_qianhai%252findex.htmlssssbuyInsurancessss' + code + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
           :
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri=http%3a%2f%2fm.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%3a%2f%2fm.chengyisheng.com.cn%2fykb_qianhai%2findex.htmlssssbuyInsurancessss' + code + '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7bfb03bc9c23b615&redirect_uri=http%3a%2f%2fm.chengyisheng.com.cn%2fykb%2fwp%2fpublic%2flogin%2f%3fykb_url%3dhttp%253a%252f%252fm.chengyisheng.com.cn%252fykb_qianhai%252findex.htmlssssbuyInsurancessss' + code + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
 
       },
       goAuth() {
