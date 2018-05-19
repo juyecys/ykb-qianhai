@@ -20,6 +20,18 @@
         </li>
       </ul>
       </div>
+    <!--<group title="出生日期" gutter="0">-->
+      <!--<Datetime-->
+        <!--format="YYYY-MM"-->
+        <!--v-model="user.birthday"-->
+        <!--:start-date="startDate"-->
+        <!--:placeholder="'请输入出生年月'"-->
+        <!--:end-date="endDate"-->
+        <!--label-width="30"-->
+        <!--@on-hide ="hideDateTime"-->
+      <!--&gt;-->
+      <!--</Datetime>-->
+    <!--</group>-->
     <div class="button-wrapper">
       <XButton
         action-type="button"
@@ -29,7 +41,9 @@
       >
       </XButton>
     </div>
+
     <popup v-model="showGroupPopup" position="bottom" class="popup" >
+
       <popup-header
         title="填写基本信息"
       ></popup-header>
@@ -38,26 +52,24 @@
       </span>
       <ul class="top">
         <li class="bdr-bottom">
-          <span class="left">姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名</span>
+          <span class="left">姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名</span>
           <div class="right">
           <input type="text" v-model="user.name" placeholder="请输入姓名">
         </div>
         </li>
-        <li  class="bdr-bottom"  @click="birthdayVisibility = true">
+        <li  class="bdr-bottom"  @click="showDateTime">
         <span class="left" >出生日期</span>
          <div class="right right-icon" >
-         <p>
-           {{user.birthday}}
-         </p>
+           <input type="text" v-model="user.birthday" disabled="disabled">
          <p>
            <img  src="../../static/images/icon-date.png" alt="" class="rightIcon">
          </p>
        </div>
       </li>
         <li  class="bdr-bottom"  @click="showSex">
-          <span class="left">性&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp别</span>
+          <span class="left">性&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp别</span>
           <div class="right right-icon">
-          <p>{{user.gender}}</p>
+            <input type="text" v-model="user.gender" disabled="disabled">
           <p>
             <img  src="../../static/images/icon-right-arrow.png" alt="" class="rightIcon smallIcon">
           </p>
@@ -83,6 +95,7 @@
     <popup
       v-model="showSexPopup"
       @on-hide = "sexPopupHide"
+      class="sex"
     >
       <popup-header
       left-text="取消"
@@ -91,6 +104,7 @@
       @on-click-right="sexPopupHide"
     ></popup-header>
       <group gutter="0" >
+
         <x-input
           @click.native="selectSex('男')"
           placeholder-align="center"
@@ -105,26 +119,22 @@
           :readonly="true"
           text-align="center"
         ></x-input>
+
       </group>
     </popup>
-    <Datetime
-      format="YYYY-MM"
-      v-model="user.birthday"
-      :start-date="startDate"
-      :placeholder="'请输入出生年月'"
-      :end-date="endDate"
-      label-width="30"
-      :show.sync="birthdayVisibility"
-    >
-    </Datetime>
+
   </div>
 
 </template>
 
 <script>
   require('swiper/dist/css/swiper.css')
+  import Vue from 'vue'
   import api from '../api/index';
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  import { DatetimePlugin } from 'vux'
+  Vue.use(DatetimePlugin)
+
   import { Popup,XButton,Alert,Group,XInput,Calendar,Datetime,PopupHeader,PopupRadio, XTextarea } from 'vux'
   export default {
     name: "buy-insurance",
@@ -232,9 +242,31 @@
       })
     },
     mounted(){
-      this.keyboardFuc()
+     this.keyboardFuc()
     },
     methods:{
+      hideDateTime(){
+        this.birthdayVisibility =  false
+      },
+      showDateTime(){
+        let _this = this
+        this.$vux.datetime.show({
+          value:'', // 其他参数同 props
+          startDate:this.startDate,
+          placeholder:'请输入出生年月',
+          endDate:this.endDate,
+          format:"YYYY-MM",
+          confirmText:'确定',
+          cancelText:'取消',
+
+          onHide () {
+            _this.user.birthday = this.value
+          },
+          onShow () {
+            const _this = this
+          }
+        })
+      },
       showSex(){
         this.showSexPopup = true;
         this.showGroupPopup = false
@@ -257,7 +289,9 @@
         window.location.href = this.getAuthUrl();
       },
       togglePopup(){
-        this.showGroupPopup=this.showGroupPopup == true ?  false : true
+        console.log(this.showGroupPopup)
+        this.showGroupPopup= this.showGroupPopup == true ?  false : true
+
       },
       showSexOptions(){
         this.showSexPopup = true
@@ -319,11 +353,6 @@
                })
         }
       },
-      getBg(item) {
-        return {
-          backgroundImage: 'url('+item+')'
-        }
-      },
       goConsultQrcode(){
         console.log("i am in")
         this.$router.push({
@@ -363,8 +392,9 @@
 <style lang="less" >
   @import '../assets/font.less';
   /* 去除iPhone中默认的input样式 */
-
+  @import '../assets/base.less';
   #buyInsurance {
+    input[disabled]{background:#fff;opacity:1;color:red;}
     .vux-x-input-right-full{
       align-items: center;
       height: 100% !important;
@@ -423,6 +453,7 @@
         height: 100/@size;
         border-radius: 0;
         color: #fffefe;
+        background-size: 100% 100%;
       }
     }
     .tips{
@@ -467,6 +498,7 @@
           outline:none;
           border: 0;
           -webkit-tap-highlight-color: rgba(0,0,0,0);
+          color:transparent;
         }
         input::-webkit-input-placeholder {
           font-size: 30/@size;
@@ -546,7 +578,14 @@
         border-radius: 0 !important;
         color: #fffefe;
         background: url(../../static/images/bg-btn.png) no-repeat;
+        background-size: 100% 100%;
       }
+    }
+    .sex{
+      .vux-x-input:first-child{
+        border-bottom: thin solid #ecebee;
+      }
+
     }
     .vux-cell-primary{
       display: none;

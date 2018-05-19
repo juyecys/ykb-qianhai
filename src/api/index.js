@@ -49,7 +49,7 @@ const getuserInfo = async ()=>{
 const getInsuranceImg = async()=>{
   let url = '';
   let isWeixin = /micromessenger/.test(navigator.userAgent.toLowerCase())
-  if (isWeixin) {
+  if (document.domain.indexOf("192.168") === -1 && isWeixin) {
     url = '/ykb/wp/private/activity/query?name=bdChannel';
   } else {
     url = '/ykb/wp/public/activity/query?name=bdChannel';
@@ -68,7 +68,7 @@ const getInsuranceImg = async()=>{
 const submitUserInfo = async(params)=>{
   let url = '';
   let isWeixin = /micromessenger/.test(navigator.userAgent.toLowerCase())
-  if (isWeixin) {
+  if (document.domain.indexOf("192.168") === -1 && isWeixin) {
     url = '/ykb/wp/private/bduser/';
   } else {
     url = '/ykb/wp/public/bduser/';

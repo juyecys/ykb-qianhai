@@ -5,9 +5,9 @@ import OrderList from '@/views/orderList'
 import InsuranceGoods from '@/views/insuranceGoods'
 import Hospital from '@/views/hospital'
 import SurgicalInsurance from '@/views/surgicalInsurance'
-import buyInsurance from '@/views/buyInsurance'
+// import buyInsurance from '@/views/buyInsurance'
 import consultQrcode from '@/views/consultQrcode'
-
+const buyInsurance = r => require.ensure([],()=>{r(require('@/views/buyInsurance'))},'buyInsurance')
 
 
 Vue.use(Router)
@@ -43,6 +43,11 @@ export default new Router({
       path:'/buyInsurance/:code',
       name:'buyInsurance',
       component:buyInsurance
+      // component:function (resolve) {
+      //   require(['@/views/buyInsurance'], resolve)
+      // }
+        // 异步组件更加合理
+
     },
     {
       path:'/consultQrcode',
