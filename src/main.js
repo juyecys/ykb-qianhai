@@ -8,12 +8,17 @@ import axios from 'axios'
 import  { AlertPlugin, LoadingPlugin } from 'vux'
 Vue.use(AlertPlugin)
 Vue.use(LoadingPlugin)
+/*
+
+let vconsole = require('vconsole');
+var c = new vconsole();
+*/
 
 
 Vue.config.productionTip = false
 
 Vue.prototype.wxShare = (obj)=>{
-  axios.get('/ykb/wp/public/config/?url='+window.location.href)
+  axios.get('/ykb/wp/public/config/?url='+ encodeURIComponent(location.href.split('#')[0]))
     .then(res=>{
       if(res.data.code === 2000){
         let data = res.data.result
@@ -35,8 +40,15 @@ Vue.prototype.wxShare = (obj)=>{
     .catch(error=>{
       console.log(error)
     });
+  wx.error((res)=> {
+    console.log('微信执行错误:');
+    console.log(res);
+    isWeixinReady = false;
+  });
   wx.ready(()=>{
     // 分享给朋友
+    console.log('wx.ready了')
+    console.log(obj)
     wx.onMenuShareAppMessage({
       title: obj.title, // 分享标题
       desc: obj.desc, // 分享描述
