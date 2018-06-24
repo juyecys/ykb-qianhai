@@ -14,7 +14,13 @@ module.exports = {
       '/ykb':{
         target:'http://staging.chengyisheng.com.cn',//'http://192.168.1.31:9098',
         changeOrigin:true
+        /*
+          那么本地会虚拟一个服务端接收你的请求并代你发送该请求，这样就不会有跨域问题了，当然这只适用于开发环境
+         */
       }
+      /*
+          /ykb/something.do表示 ： http://staging.chengyisheng.com.cn/ykb/something.do
+       */
     },
 
     // Various Dev Server settings
