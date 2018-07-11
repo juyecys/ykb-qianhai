@@ -30,6 +30,11 @@ export default new Router({
       component: InsuranceGoods
     },
     {
+      path: '/insuranceGood/:code',
+      name: 'insuranceGoods',
+      component: InsuranceGoods
+    },
+    {
       path: '/hospital',
       name: 'hospital',
       component: Hospital
