@@ -51,7 +51,7 @@ export default new Router({
       // component:function (resolve) {
       //   require(['@/views/buyInsurance'], resolve)
       // }
-        // 异步组件更加合理
+      // 异步组件更加合理
 
     },
     {
